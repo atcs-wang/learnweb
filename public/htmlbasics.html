@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="A basic example of an HTML page, and a summary of fundamental HTML concepts.">
+    <title>HTML Fundamentals</title>
+</head>
+
+<body>
+    <h1>The basics of HTML</h1>
+    <img src="images/HTML5_logo.png" alt="HTML 5 Logo">
+    <p>HTML stands for Hyper Text Markup Language.</p>
+    <p>
+        HTML documents are
+        composed of <strong>HTML elements</strong>. Each HTML element describes
+        a <strong>type</strong> of document <strong>content</strong>.
+    </p>
+    <p> Here's a Heading Level 1 element:</p>
+
+    <code>&lt;h1&gt;Welcome to our webpage!&lt;/h1&gt;</code>
+
+    <p> Note that this element has 2 tags:
+        an opening tag (&lt;h1&gt;) and a closing tag (&lt;/h1&gt;).
+        The tags themselves indicate the element <strong>type</strong>;
+        between the tags is the <strong>content</strong> of the element
+    </p>
+
+    <p>HTML elements can also be <strong>nested</strong> - that is, an element may
+        <strong>contain</strong> one or more other elements inside of it!
+    </p>
+
+    <p>Some HTML elements, such as the &lt;br&gt; line break element, do not have a closing tag. <br>
+        These elements are called <strong>empty</strong> elements, because they cannot contain any content, 
+        including other nested elements.
+    </p>
+
+    <p>Elements may also have <strong>attributes</strong> indicating additional properties/information about the element, 
+        which are specified within the opening tag. <br>
+        For example, an &lt;img&gt; image element (see details below) may include attributes like 
+        <strong>src</strong>, <strong>alt</strong>, and <strong>title</strong>.
+    </p>
+
+
+    <h2>Fundamental Document Structure</h2>
+
+
+
+    <p>Here is a simple but complete page.</p>
+
+    <pre><code>
+    &lt;html&gt;
+        &lt;head&gt;
+            &lt;title&gt;Our Webpage&lt;/title&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            &lt;h1&gt;Welcome to our webpage!&lt;/h1&gt;
+            &lt;p&gt;There isn’t much here yet.&lt;/p&gt;
+            &lt;p&gt;But, there will be more very soon!&lt;/p&gt;
+        &lt;/body&gt;
+    &lt;/html&gt;
+    </code></pre>
+
+
+    <ul>
+        <li>
+            HTML elements in a document are organized in a hierarchy, a lot like a family tree. The “root” of the tree
+            is
+            the html element.
+        </li>
+        <li>
+            Nested elements are called “children” of the element that contains them. The containing element is called
+            the
+            “parent” element.
+            For example, the body element has 3 children: h1, and two p elements, to which the body element is their
+            parent.
+        </li>
+        <li>The HTML element always has exactly two children - the head and the body elements. These are
+            sectioning elements with special purposes:</li>
+        <ol>
+            <li>The body element contains all of the elements that represent content to be displayed onscreen</li>
+            <li>The head elements contains non-displayed information about the page, such as the tab title or other meta
+                information about the site (for example, short descriptions and keywords used by search engines and
+                social
+                media)</li>
+        </ol>
+        <li>
+            Note the use of indentation to organize the nested elements. See the <a href="#formatting">"Formatting HTML" section</a> for tips on keeping things organized.
+        </li>
+    </ul>
+    <h2>HTML elements</h2>
+        <h3>HTML Text elements</h3>
+        <p>This is a non-exhaustive list of common HTML elements used to organize and structure blocks of text on a page. 
+            For a more in-depth tutorial on these common elements, check out MDN's 
+            <a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/HTML_text_fundamentals" target="_blank">HTML text fundamentals</a>
+        </p>
+        <ul>
+            <li>The &lt;p&gt; element represents a paragraph.</li>
+            <li>The &lt;h1&gt;, &lt;h2&gt;,... &lt;h6&gt; elements represent six levels of section headings;&lt;h1&gt; is
+                the highest level and largest text, &lt;h6&gt; is the highest level and largest text.</li>
+            <li>The &lt;ul&gt; and &lt;ol&gt; create Unordered (bulletted) lists and Ordered (numbered) lists, respectively.
+                Both kinds of lists have &lt;li&gt; child elements (“list item”), which separate the different items of the
+                list.
+            </li>
+            <li>
+                The &lt;pre&gt; ("preformatted") element renders its contents as written in the HTML file, including whitespace and linebreaks,
+                usually in monospace font. This is helpful for displaying certain text like code or ASCII art.   
+            </li>
+            <li>
+                The &lt;br&gt; element produces a line break; it is an <strong>empty</strong> element and thus has no closing tag or content. <br> 
+                This is useful for poetry, lyrics, or other text content where the line breaks are specific, and should not be determined purely by the width of the text area.<br> 
+                Generally, do not use &lt;br&gt; to do paragraph breaks or separate blocks of text; rather, separate the text into multiple elements. 
+            </li>
+            <li>There are many HTML elements that allow for in-line text semantics. Here are some common ones:
+                <ul>
+                    <li>
+                        <strong>&lt;strong&gt;</strong>, which indicates important text and is typically rendered as bold.
+                    </li>
+                    <li>
+                        <em>&lt;em&gt;</em>, which indicates emphasized text and is typically rendered as italic. 
+                    </li>
+                    <li>
+                        The <b>&lt;b&gt;</b> and <i>&lt;i&gt;</i> elements also do bold and italics.
+                        However, it is generally considered better practice to use <strong>&lt;strong&gt;</strong> and <em>&lt;em&gt;</em>.
+                    </li>
+                    <li>
+                        The <u>&lt;u&gt;</u> element makes underlining. However, underlined text on the web usually implies links, so 
+                        it's usually not a good idea to underline things.  
+                    </li>
+                    <li>
+                        The <code>&lt;code&gt;</code> element indicates code snippets, and usually renders in monospace font.
+                        It is often nested inside a &lt;pre&gt; ("preformatted") element.  
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+        <p> For a few more advanced HTML text formatting elements, check out: <a
+                href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Advanced_text_formatting" target="_blank">MDN's Advanced Text Formatting</a>
+        </p>
+        <p> A full list of HTML text elements can be found here: <a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element#text_content" target="_blank">MDN's HTML text elements' documentation</a>
+        </p>
+        <h3>Other HTML elements</h3>
+        Here are some other kinds of (non-text) HTML elements.
+        <ul>
+            <li>
+                The special &lt;!DOCTYPE&gt; element always appears as the first line of an html document, 
+                and declares the document’s type/version of HTML. Modern pages written in HTML5 need only have: &lt;!DOCTYPE html&gt;  
+            </li>
+            
+            <li>
+                The &lt;title&gt; element species the title displayed in the Tab bar at the top of the browser window. 
+                This goes in the &lt;head&gt; section of the HTML document.
+            </li>
+            <li>
+                &lt;meta&gt; elements also go in the &lt;head&gt; section of the HTML document. 
+                These contain “meta” information about the page, but that isn’t itself displayed ON the page. 
+                These may be used by the browser, search engines, social media platforms, etc.
+            </li>
+            <li>
+                The &lt;img&gt; element is an empty element which displays an image. The location of the image file must be 
+                provided as the <strong>src</strong> attribute. Optional attributes include <strong>alt</strong> for screen readers, 
+                and <strong>title</strong> for tooltip (mouse-over) text.  <br>
+                Here's an example of an image element:
+                <br><code>
+                    &lt;img src="picture.jpg" alt="A dog wearing sunglasses" title="Isn’t he cute?!?"&gt;
+                </code>
+                <br>
+                <img src="images/dog.jpg" alt="A dog wearing sunglasses" title="Isn’t he cute?!?">
+            </li>
+            <li>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a" target="_blank"> &lt;a&gt;</a>, known as the
+                anchor element, creates a hyperlink to a URL given in the <strong>href</strong> attribute.
+            </li>
+        </ul>
+
+
+    <h2 id="formatting">Formatting HTML</h2>
+    <ul>
+        <li>When writing HTML, extra spaces, indentations, and linebreaks are not rendered by the browser. This might be
+            frustrating at first, but it actually allows us to better organize the code without affecting the layout negatively.
+            If you have a lot of content in a single element, you can spread it over several lines for viewability.
+        </li>
+        <li>When nesting elements, use indentation to organize levels; each level of nesting increases by one indent. 
+            (A common exception are the head and body elements, since they are standard in every HTML document)
+        </li>
+        <li>If we have parent elements stretched across multiple lines, we sometimes try to keep the opening and closing tags
+            aligned at the same indentation.</li>
+    </ul>
+    <p><a href="usingvscode.html" title="Using VSCode effectively" target="_blank">Check out some more tips for using VSCode effectively here!</a></p>
+
+</body>
+
+</html>
