@@ -1,0 +1,66 @@
+/* Move the html rules to the top, since many of the properties 
+are "inherited" by the other elements, serving as a default */
+/* html covers the whole page! */
+html {
+    background-color: #00539f;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 10px;
+}
+h1 {
+    font-size: 60px;
+    text-align: center;
+}
+
+/*Listed selectors separated by ,*/
+p, li {
+    font-size: 16px;
+    line-height: 2;
+    letter-spacing: 1px;  
+}
+/*Class selector starts with .*/
+.bold{
+    font-weight:bold;
+}
+/*Combined selectors */
+li.bold{
+    font-style:italic;
+}
+p.bold{
+    text-decoration:underline;
+}
+
+/* body covers nearly the whole page...*/
+body {
+  width: 600px;
+  margin: 0 auto;
+  background-color: #FF9500;
+  padding: 0 20px 20px 20px;
+  border: 5px solid black;
+}
+
+/* We already have a rule for h1 above, but you can have multiple, actually! */
+h1 {
+    margin: 0;
+    padding: 20px 0;
+}
+
+/* Style a div */
+div.coolbox {
+    margin: 10px;
+    padding: 20px;
+    border: lightblue dotted 3px;
+}
+
+/* Style a span */
+span.language {
+    font-family:'Courier New', Courier, monospace;
+}
+
+/* img elements are inline; Must use block-level display to make
+some properties apply */
+img {
+    display: block;
+    margin: 0 auto;
+    width: 70%;
+    /* height:auto; */
+  }
