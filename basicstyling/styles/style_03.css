@@ -44,6 +44,16 @@ h1 {
     padding: 20px 0;
 }
 
+/* img elements are inline; Must use block-level display to make
+some properties apply */
+img {
+    display: block;
+    margin: 0 auto;
+    width: 70%;
+    /* height:auto; width/height is auto by default */
+}
+
+
 /* Style a div */
 div.coolbox {
     margin: 10px;
@@ -56,11 +66,3 @@ span.language {
     font-family:'Courier New', Courier, monospace;
 }
 
-/* img elements are inline; Must use block-level display to make
-some properties apply */
-img {
-    display: block;
-    margin: 0 auto;
-    width: 70%;
-    /* height:auto; */
-  }
