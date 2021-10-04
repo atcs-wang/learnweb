@@ -1,0 +1,37 @@
+/* Color palette stolen from facebook
+https://www.color-hex.com/color-palette/185 
+*/
+html {
+    background-color: #dfe3ee;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    /*
+    Border box sizing makes height/width properties
+    include padding and border.
+    See https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing
+    */
+    box-sizing: border-box; 
+    min-height: 100vh; /* Fills entire viewport */
+    padding: 20px;
+
+    /* 
+    Flexbox is a very nice CSS layout technique.
+    See: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+    */
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    flex: 1; /* Fill (vertical) space */
+    background-color: 	#8b9dc3;
+    padding: 10px 20px;
+    border: #3b5998 solid 3px;
+}
+
+.attention {
+    font-style: italic;
+    color: blue;
+    padding: 2px;
+    border: dashed yellow 2px;
+}

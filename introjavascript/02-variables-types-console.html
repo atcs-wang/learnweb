@@ -1,0 +1,55 @@
+<!-- This empty document was initialized with the Emmet abbreviation of "!" in VSCode  -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Ex2</title>
+
+    <link rel="stylesheet" href="styles/main-style.css" type="text/css">
+</head>
+
+<body>
+    <h1>Example 2</h1>
+    <h2>variables, types, console</h2>
+    <p>This page has some embedded Javascript.</p>
+    <p>If you're seeing this page rendered, the script is already finished.</p>
+    <p>Check out the program logs. <span class="attention">Right-click -> Inspect -> Console.</span></p>
+
+    <!-- Typically, we put scripts at the bottom of the body -->
+    <script>
+        //Variables are declared with "let" (also "var" but avoid it for now)
+        //Javascript variables are NOT strongly typed. 
+        let message = "Hi"; //String, using double quotes
+        let message2 = 'Hey'     //String, using single quotes - either is fine.
+        let amount = 10;    //Number
+        let amount2 = 5.5;  //Number also; no type distinction between ints and floats
+        let condition = true; // Boolean
+        
+        //Once declared, a variable can be updated without "let"
+        condition = false;
+        // let boolean = false; // (redeclaration causes an error)
+
+        //We can use concatenation to combine strings. Other types are auto converted to string.
+        console.log("message = " + message);
+        // The typeof operator gives the type of a variable/value.
+        console.log("message type: " + (typeof message) );
+        //console.log also takes multiple arguments, and prints a space in between each
+        console.log("amount =", amount);
+        console.log("amount type:", (typeof amount));
+
+        //"Template literals" using backticks (`) can have embedded expressions
+        console.log(`message2 = ${message2} (${typeof message2})`);
+        console.log(`amount2 = ${amount2} (${typeof amount2})`);
+        console.log(`condition = ${condition} (${typeof condition})`);
+
+        console.log("You can interactively run lines of JS in the console.");
+        console.log("Try entering a variable name or an expression below:")
+    </script>
+    <!-- The HTML does not render until the script finishes running. -->
+
+</body>
+
+</html>
