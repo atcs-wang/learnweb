@@ -42,7 +42,7 @@ while (choice != null) { // repeat as long as not Cancel / Escape
         // If the string isn't convertable to number, all ops return false.
         let response = "Just kidding. I didn't really expect you to answer that.";
         if (velocity >= 20 && velocity <= 25) {
-            response += " But that's pretty reasonable!";
+            response += " How do know so much about swallows?";
         }
         alert(response);
 
