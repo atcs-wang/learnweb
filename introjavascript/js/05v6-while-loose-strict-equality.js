@@ -18,7 +18,7 @@ while (choice != null) { // repeat as long as not Cancel / Escape
         // convert to lowercase and trim surrounding whitespace before doing comparisons.
         color = color.toLowerCase();
         color = color.trim();
-        //If only one line of code follow an if/else, no need for brackets
+        // If only one line of code follow an if/else, no need for brackets
         if (color == "blue")
             alert("Very well.");
         else if (color == "yellow")
@@ -28,6 +28,7 @@ while (choice != null) { // repeat as long as not Cancel / Escape
 
     } else if (choice == 2) { //choice can be 2, "2", etc...
 
+        //Convert to lowercase and trim surrounding whitespace before comparisons.
         let capital = prompt("What... is the capital of Assyria?").toLowerCase().trim(); //chained methods
         if (capital == "ashur" || capital == "assur") // || is the logical OR operator.
             alert("Correct!");
@@ -46,7 +47,25 @@ while (choice != null) { // repeat as long as not Cancel / Escape
         }
         alert(response);
 
-    } 
+    } else if (choice == 0) {//WATCH OUT: choice can be 0, "0", AND even ""
+        
+        //To do strict comparison, use === or !== operators.
+        //=== always returns false for mismatched types 
+        if (choice.trim() === "0") {
+            alert("Cheeky. That's technically a whole number, yes...");
+        } else if (choice === "") {
+            alert("You didn't enter anything.");
+        }
+
+    } else { //Any other string.
+        // Check if a String is Not a Number with the isNaN() function.
+        // The weird exception is the "", which if converted to a Number is 0.
+        if (isNaN(choice))
+            alert("That's not a number, you empty headed animal food trough wiper!");
+        else {
+            alert("That number is not a whole number up to 5! I mean... 3, sire!");
+        }            
+    }
 
     //Get a NEW choice value before the while loop repeats
     choice = prompt("Pick another (whole) number up to 3...");

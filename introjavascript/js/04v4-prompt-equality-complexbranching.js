@@ -30,7 +30,7 @@ if (quest != null) {
     let message = "I see, I see.";
     if (quest == defaultQuest) {
         console.log("The default input was used.");
-        message = message + " A noble quest indeed!"; //add to the message
+        message = message + "\nA noble quest indeed!"; //add to the message
     } 
     alert(message);
 } else {

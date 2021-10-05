@@ -14,10 +14,11 @@ while (choice != null) { // repeat as long as not Cancel / Escape
     if (choice == 1) {//choice can be 1, "1", or even " 1", "1 ", etc...
 
         let color = prompt("What... is your favorite color?");
-        //Convert to lowercase and trim surrounding whitespace before comparisons.
+        // String comparison matches exact characters. If you want to be a little less strict,
+        // convert to lowercase and trim surrounding whitespace before doing comparisons.
         color = color.toLowerCase();
         color = color.trim();
-        //If only one line of code follow an if/else, no need for brackets
+        // If only one line of code follow an if/else, no need for brackets
         if (color == "blue")
             alert("Very well.");
         else if (color == "yellow")

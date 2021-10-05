@@ -30,9 +30,9 @@ if (quest != null) {
     let message = "I see, I see.";
     if (quest == defaultQuest) {
         console.log("The default input was used.");
-        message = message + " A noble quest indeed!"; //add to the message
+        message = message + "\nA noble quest indeed!"; //add to the message
     } else if (quest == "") {
-        message += " You have little ambition." // x += y is a shortcut for x = x + y
+        message += "\nYou have little ambition." // x += y is a shortcut for x = x + y
     }
     alert(message);
 } else {
