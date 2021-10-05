@@ -58,13 +58,13 @@ while (choice != null) { // repeat as long as not Cancel / Escape
         }
 
     } else { //Any other string.
-        // Check if a String is Not a Number with the isNaN() function.
-        // The weird exception is the "", which if converted to a Number is 0.
+        // Explicitly check if something is "Not a Number" with the isNaN() function.
+        // The weird String exception is the "", which if converted to a Number is 0.
         if (isNaN(choice))
             alert("That's not a number, you empty headed animal food trough wiper!");
         else {
             alert("That number is not a whole number up to 5! I mean... 3, sire!");
-        }            
+        }
     }
 
     //Get a NEW choice value before the while loop repeats
