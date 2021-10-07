@@ -1,0 +1,25 @@
+strong {
+    color: darkred;
+}
+div#interactive-area {
+    background-color: 	#dfe3ee;
+    padding: 10px 20px;
+    min-height: 50px;
+    border: #3b5998 dashed 3px;
+}
+
+.hidden {
+    display: none;
+}
+
+.fancy-style {
+    color: goldenrod;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: italic;
+}
+
+.scary-style {
+    color: darkred;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight:bold 
+}

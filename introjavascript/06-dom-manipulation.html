@@ -1,0 +1,47 @@
+<!-- This empty document was initialized with the Emmet abbreviation of "!" in VSCode  -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Ex6</title>
+
+    <link rel="stylesheet" href="styles/main-style.css" type="text/css">
+    <link rel="stylesheet" href="styles/dom-update.css" type="text/css">
+</head>
+
+<body>
+    <h1>Example X</h1>
+    <h2>topics<strong> + DOM Manipulation</strong></h2>
+    <p>This page has some embedded Javascript.</p>
+    <p>If you're seeing this page rendered, the script is already finished.</p>
+    <p>Check out the program logs. <span class="attention">Right-click -> Inspect -> Console.</span></p>
+    <p>See area below for JS-manipulated / JS-interactive content.</p>
+    <div id="interactive-area">
+        
+    </div>
+    <!-- Typically, we put scripts at the bottom of the body -->
+    <script>
+        // document.querySelector() uses CSS style selectors to find 
+        // an element on the page. 
+        let h1Element = document.querySelector('h1');
+        h1Element.textContent = "Example 6"
+
+        let h2Element = document.querySelector('h2');
+        h2Element.innerHTML = "Basics of <strong>DOM Manipulation</strong>";
+        
+        let div = document.querySelector("#interactive-area");
+        // document.createElement() creates a new element, but 
+        // that element is NOT yet added to the DOM
+        let newParagraph = document.createElement("p");
+        newParagraph.textContent = "This element is added via JS!";
+        // To add an element to the page,
+        // we add it as a child to its parent.
+        div.appendChild(newParagraph);
+    </script>
+    <!-- The HTML does not render until the script finishes running. -->
+</body>
+
+</html>
