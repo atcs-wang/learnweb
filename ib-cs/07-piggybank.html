@@ -1,0 +1,57 @@
+<!-- This empty document was initialized with the Emmet abbreviation of "!" in VSCode  -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS ExX</title>
+
+    <link rel="stylesheet" href="styles/main-style.css" type="text/css">
+    <link rel="stylesheet" href="styles/dom-update.css" type="text/css">
+    <style>
+        ul {
+            /* list-style: none; */
+            padding-left: 0;
+        }
+        li {
+            display: inline;
+            padding: 20px;
+            margin-left: 0px;
+            margin-right: 20px;
+            background-color: grey;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Example 7b - Piggy Bank</h1>
+    <h2>Anonymous functions, onClick event handlers</h2>
+    <p>This page has some embedded Javascript.</p>
+    <p>If you're seeing this page rendered, the script is already finished.</p>
+    <p>Check out the program logs. <span class="attention">Right-click -> Inspect -> Console.</span></p>
+    <p>See area below for JS-manipulated / JS-interactive content.</p>
+    <div id="interactive-area">
+        <h3>Piggy Bank Balance:<span id="balance">0.00</span></h3>
+        <ul>
+            <li id="penny">Penny</li>
+            <li id="nickel">Nickel</li>
+            <li id="dime">Dime</li>
+            <li id="quarter">Quarter</li>
+        </ul>
+    </div>
+    <!-- Typically, we put scripts at the bottom of the body -->
+    <script>
+        // Inline script goes here
+        let balanceElement = document.querySelector("#balance");
+        function updateBalance(amount){
+            let value = Number(balanceElement.textContent);
+            value += amount;
+            balanceElement.textContent = value;
+        }
+    </script>
+    <!-- The HTML does not render until the script finishes running. -->
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+Todo list - progressive lab/example
+0.  just HTML/CSS?
+1.  Use repeated prompts (while) to fill the todo list (ul/li)
+2.  Use text inputs / button events to add to the list
+4.  Use button events to delete / complete (change style of) items.
+5.  Use local storage to maintain data. (arrays, objects)
+    Can sort by date when generated?
+
+6.  Use server / database to maintain (multiple) lists per user (no security)
+3.  Generate tables instead of list? (Include due date) 
+    via Handlebars
+
+7.  Todo list adding form (modal??), refreshes page?
+7.  AJAX list updates
+7.  Use security to maintain lists per user (login).
+

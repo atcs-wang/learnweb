@@ -2,7 +2,7 @@
 
 console.log("Script is running!");
 
-let nameResponseDiv = document.querySelector("#nameResponse")
+let nameResponse = document.querySelector("#name-response")
 
 
 //The prompt function (usually) returns a String
@@ -16,14 +16,14 @@ console.log("userName type:", typeof userName);
 //Use chained if-else to cascade through multiple options
 if (userName == null){
     console.log("You hit Cancel or pressed Escape!");
-    nameResponseDiv.textContent += "You prefer anonymity, I see.";
+    nameResponse.textContent += "You prefer anonymity, I see.";
 } else if (userName == ""){
-    nameResponseDiv.textContent = "You don't have a name? Odd.";
+    nameResponse.textContent = "You don't have a name? Odd.";
 } else {
-    nameResponseDiv.textContent = `Greetings, so-called "${userName}".`;
+    nameResponse.textContent = `Greetings, so-called "${userName}".`;
 }
 
-let questResponseDiv = document.querySelector("#questResponse")
+let questResponse = document.querySelector("#quest-response")
 
 //The prompt function takes an OPTIONAL second argument, a default input value.
 let defaultQuest = "To seek the Holy Grail.";
@@ -41,13 +41,13 @@ if (quest != null) {
     } else if (quest == "") {
         message += "You have little ambition." // x += y is a shortcut for x = x + y
     }
-    questResponseDiv.textContent = message;
+    questResponse.textContent = message;
 } else {
     console.log("You hit Cancel or pressed Escape!");
     if (userName != null) {
-        questResponseDiv.textContent = "Fine, your business is your own.";                
+        questResponse.textContent = "Fine, your business is your own.";                
     } else {
-        questResponseDiv.textContent = "You are a very secretive one...";
+        questResponse.textContent = "You are a very secretive one...";
     }
 
 }
