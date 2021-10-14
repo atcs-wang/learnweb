@@ -1,0 +1,24 @@
+/* Use flexbox to gracefully layout the inputs */
+.inputs {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Selects all direct children of elements of class inputs */
+.inputs > * {
+    margin-right: 5px;
+}
+
+.inputs > input {
+    font-size: inherit; /*Doesn't inherit by default, but want to match font */
+    font-family: inherit; /*Doesn't inherit by default, but want to match font */
+    background-color: rgba(255,255,255,.5); /*slightly transparent */
+    flex: 1; /*fill remaining space*/
+}
+
+.inputs > button {
+    padding: 4px 8px;
+    background-color: orange;
+    font-size: .8em; /*use a slightly smaller font than parents*/
+}
+

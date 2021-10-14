@@ -1,0 +1,42 @@
+.json-area {
+    margin: 0 auto; /* centering trick */
+    padding: 10px;
+    border: 1px dashed blue;
+    max-width: 600px;
+    
+    display:flex;
+    flex-direction: column;
+}
+
+.json-area h3 {
+    margin: 0;
+}
+
+.json-area textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.json {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.json-buttons {
+    margin: 5px 0 0 0 ;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.json-buttons button {
+    flex: 1;
+    margin: 0px 10px;
+}
+
+#export-json {
+    background-color: orange;
+}
+
+#import-json {
+    background-color: green;
+}

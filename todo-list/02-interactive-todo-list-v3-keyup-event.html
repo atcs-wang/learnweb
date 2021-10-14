@@ -1,0 +1,89 @@
+<!-- 
+    An interactive webpage which starts with an empty list, a text input, and a button.
+    Clicking the button **OR hitting Enter** while typing reads the text input for the next item,
+    which is then added to the DOM. The text input is then cleared after, or when Escape is hit.
+
+    This version demonstrates keyup events. Handlers are registered through the 
+    addEventListener() method. (the "click" event is now done with addEventListener too)
+
+    Also, the page now auto-focuses on the input at the start,  allowing the user to start typing right away.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles/00-style.css">
+    <link rel="stylesheet" href="styles/02-inputs-style.css">
+</head>
+<body>
+    
+    <h1>Whatcha gotta do today?</h1>
+    <div class="inputs">
+        <label for="item-name">Item:</label>
+        <input type="text" name="item-name" id="item-name">
+        <button id="add-button">Add</button>
+    </div>
+    <div class="notepad">
+        <h2 class="page-header">To Do:</h2>
+        <ul class="list">
+            <!-- To be given contents by JS -->
+        </ul>
+    </div>
+
+    <script>
+        
+        
+        let listElement = document.querySelector(".list");
+
+        function addItemToList(item){
+            let itemElement = document.createElement("li");
+            itemElement.textContent = item;
+            listElement.appendChild(itemElement);
+        }
+
+        let newItemInputElement = document.querySelector("#item-name");
+
+        function getNewItem() {
+            let item = newItemInputElement.value;
+            if (item.trim() != "") {
+                addItemToList(item);
+            }
+            newItemInputElement.value = "";
+        }
+
+        let buttonElement = document.querySelector("#add-button");
+        
+        // The first way we registered the "click" event: setting the onclick property
+        // buttonElement.onclick = getNewItem;
+
+        //addEventListener is the more universal way of registering an event handler.
+        buttonElement.addEventListener("click", getNewItem);
+
+        //Define and register a handler function for the event "keyup"
+        //Note that the keyup event passes a **parameter**: 
+        //an object with information about the event, such which key was released
+        function handleKeyUp(event) {
+            if (event.key === "Enter") {
+                //get item from input and add to list
+                getNewItem(); 
+            } else if (event.key === "Escape"){
+                //clear the input
+                newItemInputElement.value = ""; 
+            }
+        }
+        //Note that we register this handler with the input element, 
+        //where the user is doing the typing. 
+        //The event only triggers while focused on the element (active cursor)
+        newItemInputElement.addEventListener("keyup", handleKeyUp);
+        
+        //Start the page off with the input element focused. 
+        //That means the user's cursor starts inside, ready to type immediately.
+        newItemInputElement.focus();
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!-- 
+    A webpage with a script that begins by prompting the user for
+    a series of items to put into the to-do list. For each item,
+    a list item element is added to the DOM.
+
+    This version adds a check for empty items, only adding
+    non-empty items and warning the user otherwise.
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles/00-style.css">
+</head>
+<body>
+    
+    <h1>Whatcha gotta do today?</h1>
+
+    <div class="notepad">
+        <h2 class="page-header">To Do:</h2>
+        <ul class="list">
+            <!-- To be given contents by JS -->
+        </ul>
+    </div>
+
+    <script>
+
+        let listElement = document.querySelector(".list");
+
+        let item = prompt("What do you have to do?");
+
+        while (item != null) {
+
+            //check if the item has actual content before adding element to DOM
+            if (item.trim() != ""){
+                let itemElement = document.createElement("li");
+                itemElement.textContent = item;
+                listElement.appendChild(itemElement);
+            } 
+            else { //otherwise, remind the user gently.
+                alert("Whoops, you entered nothing.");
+            }
+            
+            item = prompt("What else do you have to do?");
+        }
+    </script>
+</body>
+</html>

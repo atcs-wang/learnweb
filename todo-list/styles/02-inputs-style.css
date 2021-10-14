@@ -1,0 +1,33 @@
+
+.inputs {
+    display: flex; /* Uses flexbox for arranging child elements */
+    flex-direction: row; /*Which direction to arrange child elements along*/
+    justify-content: center; /*In the orthogonal direction, how to justify children*/
+    margin:  10px 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+/* Using the >: Direct descendent (child) selector*/
+
+/* Selects ALL children of elements of elements of class inputs */
+.inputs > * {
+    margin-right: 5px;
+}
+
+/* Selects label children of elements of elements of class inputs */
+.inputs > label {
+    font-size: 32px;
+}
+
+/* Selects input children of elements of elements of class inputs */
+.inputs > input {
+    font-size: 28px;
+}
+
+/* Selects button children of elements of elements of class inputs */
+.inputs > button {
+    padding: 4px 8px;
+    background-color: orange;
+    font-size: 28px; /*doesn't inherit*/
+}
+

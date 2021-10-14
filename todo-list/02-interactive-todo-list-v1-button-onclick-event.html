@@ -1,0 +1,72 @@
+<!-- 
+    An interactive webpage which starts with an empty list and a button.
+    Clicking the button produces a prompt for a new item; that item is 
+    then added to the DOM.
+
+    A new function is written, and "registered" as a "handler" for an 
+    "event" - that is, the clicking of the button.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles/00-style.css">
+    <!-- New stylesheet formats things inside the .inputs div -->
+    <link rel="stylesheet" href="styles/02-inputs-style.css">
+</head>
+<body>
+    
+    <h1>Whatcha gotta do today?</h1>
+    <!-- New div for our new interactive input elements -->
+    <div class="inputs">
+        <!-- New button element added! -->
+        <button id="add-button">Add New Item</button>
+    </div>
+    <div class="notepad">
+        <h2 class="page-header">To Do:</h2>
+        <ul class="list">
+            <!-- To be given contents by JS -->
+        </ul>
+    </div>
+
+    <script>
+        
+        let listElement = document.querySelector(".list");
+
+        function addItemToList(item){
+            let itemElement = document.createElement("li");
+            itemElement.textContent = item;
+            listElement.appendChild(itemElement);
+        }
+
+        //Define a function getNewItem, which prompts the user for ONE new item, and adds to list if valid
+        function getNewItem() {
+            //prompt user for new item
+            let item = prompt("What do you have to do?");
+            //Only do if not "Cancel" or empty
+            if (item != null && item.trim() != "") {
+                //Call the addItem function, passing item as a parameter.
+                addItemToList(item);
+            }
+        }
+
+        //The original loop and prompts are removed.
+
+        //Get the button element.
+        let buttonElement = document.querySelector("#add-button");
+        //Register getNewItem as a "handler" for the button's event "click"
+        //Setting the onclick property of the element is one way to do this.
+        buttonElement.onclick = getNewItem;
+
+        //Note that we do NOT use parentheses when registering getNewItem;
+        //parentheses would call the function immediately, and the 
+        //returned RESULT would be registered as onclick. (it would be undefined)
+        //This is a common mistake; if you do it, you'll see the prompt before the page renders.
+        //Our intent is to avoid this, and render the page first before any interactivity.
+
+    </script>
+</body>
+</html>

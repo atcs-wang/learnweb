@@ -1,0 +1,48 @@
+<!-- 
+    A webpage with a script that begins by prompting the user for
+    a series of items to put into the to-do list. For each item,
+    a list item element is added to the DOM.
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles/00-style.css">
+</head>
+<body>
+    
+    <h1>Whatcha gotta do today?</h1>
+
+    <div class="notepad">
+        <h2 class="page-header">To Do:</h2>
+        <ul class="list">
+            <!-- To be given contents by JS -->
+        </ul>
+    </div>
+
+    <script>
+        //Get the list element on the page
+        let listElement = document.querySelector(".list");
+
+        //get first item from user
+        let item = prompt("What do you have to do?");
+
+        //loop until cancel is hit
+        while (item != null) { 
+            
+            //make a new <li> element for that item the user entered
+            let itemElement = document.createElement("li");
+            itemElement.textContent = item;
+
+            //Add it to the <ul> element 
+            listElement.appendChild(itemElement);
+
+            //get new item from the user, or user ends loop with cancel
+            item = prompt("What else do you have to do?");
+        }
+    </script>
+</body>
+</html>

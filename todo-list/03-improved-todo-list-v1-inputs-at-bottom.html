@@ -1,0 +1,75 @@
+<!-- 
+    An interactive webpage where the user can enter items on a list via an input.
+
+    This version doesn't change the functionality much from the previous one, 
+    but it moves the input and button to the BOTTOM of the list, simulating the 
+    feeling of writing a new line.
+    This means new list item elements are no longer appended to the end of the list, but 
+    right BEFORE the last element of the list.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles/00-style.css">
+    <!-- Swapped out stylesheet: styles .inputs differently -->
+    <link rel="stylesheet" href="styles/03-inputs-style.css">
+</head>
+<body>
+    
+    <h1>Whatcha gotta do today?</h1>
+    
+    <div class="notepad">
+        <h2 class="page-header">To Do:</h2>
+        <ul class="list">
+            <!-- To be given contents by JS -->
+            <!-- The last element contains the inputs (no label)-->
+            <li class="inputs">
+                <input type="text" name="item-name" id="item-name">
+                <button id="add-button">Add</button>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        
+        let listElement = document.querySelector(".list");
+
+        // The .inputs element is the last li on the list
+        let inputsElement = document.querySelector(".inputs");
+
+        function addItemToList(item){
+            let itemElement = document.createElement("li");
+            itemElement.textContent = item;
+
+            // Add the element right BEFORE the last li, which is the .inputs element
+            listElement.insertBefore(itemElement, inputsElement);
+        }
+
+        let newItemInputElement = document.querySelector("#item-name");
+        function getNewItem() {
+            let item = newItemInputElement.value;
+            if (item.trim() != "") {
+                addItemToList(item);
+            }
+            newItemInputElement.value = "";
+        }
+
+        let buttonElement = document.querySelector("#add-button");
+        buttonElement.addEventListener("click", getNewItem);
+
+        newItemInputElement.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                getNewItem(); 
+            } else if (event.key === "Escape"){
+                newItemInputElement.value = ""; 
+            }
+        });
+
+        newItemInputElement.focus();
+    </script>
+</body>
+</html>

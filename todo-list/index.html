@@ -1,0 +1,102 @@
+<!-- 
+    A "to-do list" linking the various versions of the todo-list app!"
+ -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>To-Do List</title>
+     <!-- This stylesheet makes the list on the page look like yellow notebook paper -->
+     <link rel="stylesheet" href="styles/00-style.css">
+     <style>
+         /* Couple of overrides */
+         .list li {
+             text-transform: none;
+            line-height: 2em;
+        }
+        .css {
+            font-size: .8em;
+            text-indent: 25px;
+        }
+     </style>
+ </head>
+ <body>
+     
+     <h1>Learn how to make a To-Do List app!</h1>
+ 
+     <div class="notepad">
+         <h2 class="page-header">Version 0: Static To-Do List</h2>
+         <ul class="list">
+             <li><a href="00-static-todolist.html">0.1: A sample list</a>
+                <br>
+                <a class=css href="styles/00-style.css">CSS: Styling the list (descendent, hover psueodo-class selectors)</a>
+            </li>
+         </ul>
+    </div>
+    <br>
+    <div class="notepad">
+
+         <h2 class="page-header">Version 1: Generated To-Do List</h2>
+         <ul class="list">
+             <li><a href="01-generated-todo-list-v1-while-prompts.html">1.1: Generating list from user input (while, prompts, DOM manipulation)</a></li>
+             <li><a href="01-generated-todo-list-v2-if-else.html">1.2: Verifying valid user input (if / else)</a></li>
+             <li><a href="01-generated-todo-list-v3-function.html">1.3: Organizing the code better (functions)</a></li>
+         </ul>
+    </div>
+    <br>
+    <div class="notepad">
+    
+         <h2 class="page-header">Version 2: Interactive To-Do List</h2>
+         <ul class="list">
+             <li><a href="02-interactive-todo-list-v1-button-onclick-event.html">2.1: Adding an interactive button (button element, handling "click" events)</a>
+                <br>
+                <a class=css href="styles/02-inputs-style.css">New CSS: Styling the input elements (child element selectors, flexbox)</a>
+            </li>
+             <li><a href="02-interactive-todo-list-v2-input.html">2.2: Input from a text box (input element) </a></li>
+             <li><a href="02-interactive-todo-list-v3-keyup-event.html">2.3: Responding to the keyboard ("keyup" events)</a></li>
+             <li><a href="02-interactive-todo-list-v4-anonymous-function copy.html">2.4: Organizing the code better (anonymous functions)</a></li>
+         </ul>
+    </div>
+    <br>
+    <div class="notepad">
+    
+         <h2 class="page-header">Version 3: Improved To-Do List</h2>
+         <ul class="list">
+            <li><a href="03-improved-todo-list-v1-inputs-at-bottom.html">3.1: Moving the inputs to the bottom</a>
+                <br>
+                <a class=css href="styles/03-inputs-style.css">Updated CSS: Styling the input elements differently (inherit)</a>
+            </li>
+            <li><a href="03-improved-todo-list-v2-toggle-class.html">3.2: Click to "finish" items (events w/ generated elements, toggling classes, closures)</a>
+                <br>
+                <a class=css href="styles/03-finished-style.css">New CSS: Styles for "finished" items</a>
+            </li>
+            <li><a href="03-improved-todo-list-v3-remove-buttons.html">3.3: Remove buttons (more events w/generated elements) </a>
+                <br>
+                <a class=css href="styles/03-removable-list-elements.css">New CSS: Updated styles for list elements with remove buttons</a>
+            </li>
+
+         </ul>
+     </div>
+     <br>
+     <div class="notepad" style="display:none">
+    
+        <h2 class="page-header">Version 4: Save-able To-Do List</h2>
+        <ul class="list">
+           <li><a href="03-improved-todo-list-v1-inputs-at-bottom.html">4.1: Export/Import JSON data </a>
+               <br>
+               <a class=css href="styles/04-json-area.css">New CSS: Styling the JSON area</a>
+           </li>
+           <li><a href="03-improved-todo-list-v2-toggle-class.html">4.2: Using localStorage to save data</a>
+           </li>
+           <li><a href="03-improved-todo-list-v3-remove-buttons.html">4.3: Embeding information in the URL (query parameters)</a>
+               <br>
+               <a class=css href="styles/04-url.css">New CSS: Updated styles for links</a>
+           </li>
+
+        </ul>
+    </div>
+
+ </body>
+ </html>

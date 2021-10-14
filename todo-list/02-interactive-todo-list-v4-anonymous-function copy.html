@@ -1,0 +1,78 @@
+<!-- 
+    An interactive webpage which starts with an empty list, a text input, and a button.
+    Clicking the button **OR hitting Enter** while typing reads the text input for the next item,
+    which is then added to the DOM. The text input is then cleared after, or when Escape is hit.
+
+    This version doesn't change the functionality, but changes the handleKeyUp 
+    function to an anonymous function, which has no name and can be passed directly 
+    to the addEventListener. This avoids extra function names that only get used once,
+    and reads more clearly in event -> handler order.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles/00-style.css">
+    <link rel="stylesheet" href="styles/02-inputs-style.css">
+</head>
+<body>
+    
+    <h1>Whatcha gotta do today?</h1>
+    <div class="inputs">
+        <label for="item-name">Item:</label>
+        <input type="text" name="item-name" id="item-name">
+        <button id="add-button">Add</button>
+    </div>
+    <div class="notepad">
+        <h2 class="page-header">To Do:</h2>
+        <ul class="list">
+            <!-- To be given contents by JS -->
+        </ul>
+    </div>
+
+    <script>
+        let listElement = document.querySelector(".list");
+
+        function addItemToList(item){
+            let itemElement = document.createElement("li");
+            itemElement.textContent = item;
+            listElement.appendChild(itemElement);
+        }
+
+        let newItemInputElement = document.querySelector("#item-name");
+
+        function getNewItem() {
+            let item = newItemInputElement.value;
+            if (item.trim() != "") {
+                addItemToList(item);
+            }
+            newItemInputElement.value = "";
+        }
+
+        let buttonElement = document.querySelector("#add-button");
+        buttonElement.addEventListener("click", getNewItem);
+
+        //handleKeyUp is now an *anonymous* function.
+        //An anonymous function has no name, but can be immediately used or passed in-line
+        //to another function; in this case, its immediately registered as an event handler.
+        newItemInputElement.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                getNewItem(); 
+            } else if (event.key === "Escape"){
+                newItemInputElement.value = ""; 
+            }
+        });
+
+        //Note that we are registering this event with the input element, specifically.
+        //The event only triggers if a key is released *while the input is in focus*
+        //If we instead registered the event with the document, 
+        //it would trigger on any key release even if the input wasn't focused.
+        //Try changing newItemInputElement.addEventListener(...) to document.addEventListener(...)
+
+        newItemInputElement.focus();
+    </script>
+</body>
+</html>

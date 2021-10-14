@@ -1,0 +1,102 @@
+<!-- 
+    An interactive webpage where the user can enter items on a list via an input.
+    Then, they can mark them complete or remove them from the list.
+
+    This version applies closures again to add a DELETE button for every list item.
+    Some structure/style changes are made to accomodate both clickable text 
+    and a button for each item.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles/00-style.css">
+    <link rel="stylesheet" href="styles/03-inputs-style.css">
+    <link rel="stylesheet" href="styles/03-finished-style.css">
+    <!-- New stylesheet updates list item elements and contents (namely flexbox) -->
+    <link rel="stylesheet" href="styles/03-removable-list-elements.css">
+</head>
+<body>
+    
+    <h1>Whatcha gotta do today?</h1>
+    
+    <div class="notepad">
+        <h2 class="page-header">To Do:</h2>
+        <ul class="list">
+            <!-- To be given contents by JS -->
+            <li class="inputs">
+                <input type="text" name="item-name" id="item-name">
+                <button id="add-button">Add</button>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        
+        let listElement = document.querySelector(".list");
+        // The inputs element - last li on the list
+        let inputsElement = document.querySelector(".inputs")
+
+        function addItemToList(item){
+            let itemElement = document.createElement("li");
+            
+            //Before the only content was text, but now we need two children elements instead.
+            // itemElement.textContent = item;
+
+            listElement.insertBefore(itemElement, inputsElement);
+
+            //First, add a paragraph tag inside the list item element, with the item content.
+            let itemContentElement = document.createElement("p");
+            itemContentElement.classList.add("item-content");
+            itemContentElement.textContent = item;
+            itemElement.appendChild(itemContentElement);
+
+            //Register the onclick with the **paragraph element** only, not the whole list item.
+            itemContentElement.onclick = function(){
+                itemContentElement.classList.toggle("finished");
+            }
+            //Alternatively, could be done with itemContentElement.addEventListener('click', function(){...}); 
+
+            //Second, add a "remove" button to the itemElement
+            let removeButtonElement = document.createElement("button");
+            removeButtonElement.textContent = "REMOVE";
+            removeButtonElement.classList.add("remove");
+            itemElement.appendChild(removeButtonElement);
+
+            //Register an anonymous handler for clicking the remove button
+            //Note that the anonymous handler refers to the particular  
+            //itemElement that was just generated in this function.
+            removeButtonElement.addEventListener('click', function() {
+                listElement.removeChild(itemElement);
+            });
+            //Alternatively, could be done with removeButtonElement.onclick = function(){...}; 
+
+        }
+
+        let newItemInputElement = document.querySelector("#item-name");
+        function getNewItem() {
+            let item = newItemInputElement.value;
+            if (item.trim() != "") {
+                addItemToList(item);
+            }
+            newItemInputElement.value = "";
+        }
+
+        let buttonElement = document.querySelector("#add-button");
+        buttonElement.addEventListener("click", getNewItem);
+
+        newItemInputElement.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                getNewItem(); 
+            } else if (event.key === "Escape"){
+                newItemInputElement.value = ""; 
+            }
+        });
+
+        newItemInputElement.focus();
+    </script>
+</body>
+</html>

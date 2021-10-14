@@ -1,0 +1,21 @@
+/*Now, all list items should use flexbox to manage containing elements*/
+.list li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /*This moves the children elements as far apart (left/right) as possible*/
+    align-items: center; /*This does vertical alignment*/
+}
+
+/*The item content*/
+.list li p.item-content {
+    margin: 0;
+    flex: 1; /*fill remaining space*/
+}
+
+/*The REMOVE buttons*/
+.list li button.remove {
+    padding: 4px 8px;
+    background-color: #cd0000;
+    font-size: .8em;
+    /* align-self: flex-end; */
+}
