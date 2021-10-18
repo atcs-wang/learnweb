@@ -1,0 +1,129 @@
+<!-- 
+    An interactive webpage where the user can enter items on a list via an input.
+    Then, they can mark them complete or remove them from the list.
+
+    This version applies closures again to add a DELETE button for every list item.
+    Some structure/style changes are made to accomodate both clickable text 
+    and a button for each item.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles/00-style.css">
+    <link rel="stylesheet" href="styles/03-inputs-style.css">
+    <link rel="stylesheet" href="styles/03-finished-style.css">
+    <link rel="stylesheet" href="styles/03-removable-list-elements.css">
+    <!-- New styles for new page header elements -->
+    <link rel="stylesheet" href="styles/03-page-header-elements.css">
+</head>
+<body>
+    
+    <h1>Whatcha gotta do today?</h1>
+    
+    <div class="notepad">
+        <!-- Page header is now a div, containing new elements -->
+        <div class="page-header">
+            <h2>To Do:</h2>
+            <p class="reset-all">Reset all</p>
+            <button class="remove-all">REMOVE ALL</button>
+        </div>
+        <ul class="list">
+            <!-- To be given contents by JS -->
+            <li class="inputs">
+                <input type="text" name="item-name" id="item-name">
+                <button id="add-button">Add</button>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        
+        let listElement = document.querySelector(".list");
+        let inputsElement = document.querySelector(".inputs")
+
+        function addItemToList(item){
+            let itemElement = document.createElement("li");
+            // Helps to have a class on all our itemElements
+            itemElement.classList.add("item");
+
+            listElement.insertBefore(itemElement, inputsElement);
+
+            let itemContentElement = document.createElement("p");
+            itemContentElement.classList.add("item-content");
+            itemContentElement.textContent = item;
+            itemElement.appendChild(itemContentElement);
+
+            itemContentElement.onclick = function(){
+                itemContentElement.classList.toggle("finished");
+            }
+
+            let removeButtonElement = document.createElement("button");
+            removeButtonElement.textContent = "REMOVE";
+            removeButtonElement.classList.add("remove");
+            itemElement.appendChild(removeButtonElement);
+
+            removeButtonElement.addEventListener('click', function() {
+                listElement.removeChild(itemElement);
+            });
+
+        }
+
+        let newItemInputElement = document.querySelector("#item-name");
+        function getNewItem() {
+            let item = newItemInputElement.value;
+            if (item.trim() != "") {
+                addItemToList(item);
+            }
+            newItemInputElement.value = "";
+        }
+
+        let buttonElement = document.querySelector("#add-button");
+        buttonElement.addEventListener("click", getNewItem);
+
+        newItemInputElement.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                getNewItem(); 
+            } else if (event.key === "Escape"){
+                newItemInputElement.value = ""; 
+            }
+        });
+
+        newItemInputElement.focus();
+
+        //Add a click event listener for the reset-all "button"
+        let resetAllElement = document.querySelector(".reset-all");
+        resetAllElement.onclick = function(){
+            //querySelectorAll returns an array(-like) object (technically a NodeList, but close to an array)
+            //Get all the itemContent elements on the page
+            let itemContentList = document.querySelectorAll(".item-content");
+            //One option for affecting all items in an array(-like) 
+            // is to loop over each index in the array(-like)
+            for(let i = 0; i < itemContentList.length; i++){
+                //Get the item at index i
+                let itemContent = itemContentList[i];
+                itemContent.classList.remove("finished"); 
+            }
+        }
+
+        //Add a click event listener for the remove-all button
+        let removeAllElement = document.querySelector(".remove-all");
+        removeAllElement.onclick = function(){
+            //Get all items
+            let itemList = document.querySelectorAll(".item");
+            //If at least 1 item, double check with user before removing everything!
+            if (itemList.length > 0 && confirm("Are you SURE you want to remove all items?\nThis can't be undone.")) {
+                //A second option for affecting all items in the array(-like)
+                //is to use forEach, which (similar to an event registration) takes a function.
+                //The function is to be applied to each element of the array(-like)
+                itemList.forEach(function(item){
+                    listElement.removeChild(item);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

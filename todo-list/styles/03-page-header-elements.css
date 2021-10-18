@@ -1,0 +1,32 @@
+/*Now, page-header should use flexbox to manage containing elements*/
+.page-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /*This moves the children elements as far apart (left/right) as possible*/
+    align-items: flex-end; /*This does vertical alignment*/
+}
+
+/*The item content*/
+.page-header h2 {
+    /* margin: 0; */
+    flex: 1; /*fill remaining space*/
+    font-size: 32px;
+    margin: 0;
+    
+}
+
+.reset-all {
+    color:green;
+    margin: 0;
+    margin-right: 5px;
+    text-decoration-line: underline;
+    font-size: 24px;
+    cursor: pointer;
+}
+/*The REMOVE buttons*/
+.remove-all {
+    padding: 4px 8px;
+    background-color: #cd0000;
+    font-size: 16px;
+    /* align-self: flex-end; */
+}
