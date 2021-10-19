@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="styles/03-inputs-style.css">
     <link rel="stylesheet" href="styles/03-finished-style.css">
     <link rel="stylesheet" href="styles/03-removable-list-elements.css">
+    <link rel="stylesheet" href="styles/03-page-header-elements.css">
     <!-- New stylesheet just for json areas -->
     <link rel="stylesheet" href="styles/04-json-area.css">
     
@@ -25,7 +26,11 @@
     <h1>Whatcha gotta do today?</h1>
     
     <div class="notepad">
-        <h2 class="page-header">To Do:</h2>
+        <div class="page-header">
+            <h2>To Do:</h2>
+            <p class="reset-all">Reset all</p>
+            <button class="remove-all">REMOVE ALL</button>
+        </div>
         <ul class="list">
             <!-- To be given contents by JS -->
             <li class="inputs">
@@ -48,44 +53,38 @@
     <script>
         
         let listElement = document.querySelector(".list");
-        // The inputs element - last li on the list
         let inputsElement = document.querySelector(".inputs")
 
+        //Updated with a second, OPTIONAL parameter. Default value is false.
         function addItemToList(item, finished=false){
+            
             let itemElement = document.createElement("li");
             
-            //Before the only content was text, but now we need two children elements instead.
-            // itemElement.textContent = item;
+            itemElement.classList.add("item");
 
             listElement.insertBefore(itemElement, inputsElement);
 
-            //First, add a paragraph tag inside the list item element, with the item content.
             let itemContentElement = document.createElement("p");
-            itemContentElement.textContent = item;
             itemContentElement.classList.add("item-content");
+            itemContentElement.textContent = item;
+            //Updated: Set the finished state (optional parameter)
             if (finished)
                 itemContentElement.classList.add("finished");
+            
             itemElement.appendChild(itemContentElement);
 
-            //Register the onclick with the **paragraph element** only, not the whole list item.
             itemContentElement.onclick = function(){
                 itemContentElement.classList.toggle("finished");
             }
-            //Alternatively, could be done with itemContentElement.addEventListener('click', function(){...}); 
 
-            //Second, add a "remove" button to the itemElement
             let removeButtonElement = document.createElement("button");
             removeButtonElement.textContent = "REMOVE";
             removeButtonElement.classList.add("remove");
             itemElement.appendChild(removeButtonElement);
 
-            //Register an anonymous handler for clicking the remove button
-            //Note that the anonymous handler refers to the particular  
-            //itemElement that was just generated in this function.
             removeButtonElement.addEventListener('click', function() {
                 listElement.removeChild(itemElement);
             });
-            //Alternatively, could be done with removeButtonElement.onclick = function(){...}; 
 
         }
 
@@ -111,30 +110,65 @@
 
         newItemInputElement.focus();
 
+
+        let resetAllElement = document.querySelector(".reset-all");
+        resetAllElement.onclick = function(){
+            let itemContentList = document.querySelectorAll(".item-content");
+            for(let i = 0; i < itemContentList.length; i++){
+                let itemContent = itemContentList[i];
+                itemContent.classList.remove("finished"); 
+            }
+        }
+
+        let removeAllElement = document.querySelector(".remove-all");
+        removeAllElement.onclick = function(){
+            let itemList = document.querySelectorAll(".item");
+            if (itemList.length > 0 && confirm("Are you SURE you want to remove all items?\nThis can't be undone.")) {
+                itemList.forEach(function(item){
+                    item.remove();
+                });
+            }
+        }
+
+        //Set up onclicks for the export JSON functionality
+
         let jsonTextArea = document.querySelector("#json");
 
         document.querySelector("#export-json").onclick = function(){
             console.log("export");
-            let listItems = [];
+            let listItems = []; //Create an empty list 
+            //For every item content HTML element
             listElement.querySelectorAll(".item-content").forEach(function(itemContentElement){
-                listItems.push(
-                    {
-                        content: itemContentElement.textContent,
-                        finished: itemContentElement.classList.contains("finished")
-                    }
-                );
+                //Create an object representing the content and its finished state 
+                //The new object has two properties: content and finished
+                let obj = {
+                    content: itemContentElement.textContent,
+                    finished: itemContentElement.classList.contains("finished")
+                }
+                //Add the object to the list
+                listItems.push(obj);
             });
-            jsonTextArea.value = JSON.stringify(listItems, null, 2); //the third option pretty prints with said spacing
+            //Take the list of objects and use JSON.stringify to convert to a JSON string 
+            // The null and 2 arguments tell it to "pretty" print with an indent of 2  
+            //Place that string in the textarea
+            jsonTextArea.value = JSON.stringify(listItems, null, 2); 
         }
 
+        //Set up onclicks for the import JSON functionality
         document.querySelector("#import-json").onclick = function(){
             console.log("import");
-            let listItems = JSON.parse(jsonTextArea.value); //we assume its an array of objects
+            //JSON.parse is the reverse of JSON.stringify() - takes a string (contents of the textarea)
+            // and reconstitutes it into what it was. In this case, its an array of objects
+            let listItems = JSON.parse(jsonTextArea.value); 
+            //...It should be an array of objects, but if not, we'll have errors.
 
-            listElement.replaceChildren(inputsElement); //clear out all list items, replace inputsElement
+            //Clear out all list items, then replace inputsElement
+            listElement.replaceChildren(inputsElement); 
 
+            //For every object in the array, add to the list.
             listItems.forEach(function(listItem){ 
-                //every item in the array, add to the list.
+                //Each listItem object had two properties, content and finished
+                //Use them to recreate the HTML elements
                 addItemToList(listItem.content, listItem.finished);
             })
         }

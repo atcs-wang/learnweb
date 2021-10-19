@@ -47,6 +47,7 @@
 
         function addItemToList(item){
             let itemElement = document.createElement("li");
+            
             // Helps to have a class on all our itemElements
             itemElement.classList.add("item");
 
@@ -120,7 +121,8 @@
                 //is to use forEach, which (similar to an event registration) takes a function.
                 //The function is to be applied to each element of the array(-like)
                 itemList.forEach(function(item){
-                    listElement.removeChild(item);
+                    item.remove();
+                    //alternatively, use: listElement.removeChild(item);
                 });
             }
         }
