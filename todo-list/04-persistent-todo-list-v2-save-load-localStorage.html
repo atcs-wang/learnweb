@@ -1,0 +1,180 @@
+<!-- 
+    An interactive webpage where the user can enter items on a list via an input.
+    Then, they can mark them complete or remove them from the list.
+
+    This version utilizes localStorage to save the state of our list 
+    (stored as JSON string) in the browser, and to load it again.
+    For now, save/load functionality is attached to buttons.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles/00-style.css">
+    <link rel="stylesheet" href="styles/03-inputs-style.css">
+    <link rel="stylesheet" href="styles/03-finished-style.css">
+    <link rel="stylesheet" href="styles/03-removable-list-elements.css">
+    <link rel="stylesheet" href="styles/03-page-header-elements.css">
+    <link rel="stylesheet" href="styles/04-json-area.css">
+    
+</head>
+<body>
+    
+    <h1>Whatcha gotta do today?</h1>
+    
+    <div class="notepad">
+        <div class="page-header">
+            <h2>To Do:</h2>
+            <p class="reset-all">Reset all</p>
+            <button class="remove-all">REMOVE ALL</button>
+        </div>
+        <ul class="list">
+            <!-- To be given contents by JS -->
+            <li class="inputs">
+                <input type="text" name="item-name" id="item-name">
+                <button id="add-button">Add</button>
+            </li>
+        </ul>
+    </div>
+
+    <hr>
+    <div class="json-area">
+        <!-- This area works a bit differently now; rename it -->
+        <h3>Local Storage Controls</h3>
+        <!-- <textarea id="json"></textarea> -->
+        <div class="json-buttons">
+            <button id="export-json">Save</button>
+            <button id="import-json">Load</button>        
+        </div>
+    </div>
+
+    <script>
+        
+        let listElement = document.querySelector(".list");
+        let inputsElement = document.querySelector(".inputs")
+
+        function addItemToList(item, finished=false){
+            
+            let itemElement = document.createElement("li");
+            
+            itemElement.classList.add("item");
+
+            listElement.insertBefore(itemElement, inputsElement);
+
+            let itemContentElement = document.createElement("p");
+            itemContentElement.classList.add("item-content");
+            itemContentElement.textContent = item;
+            
+            if (finished)
+                itemContentElement.classList.add("finished");
+            
+            itemElement.appendChild(itemContentElement);
+
+            itemContentElement.onclick = function(){
+                itemContentElement.classList.toggle("finished");
+            }
+
+            let removeButtonElement = document.createElement("button");
+            removeButtonElement.textContent = "REMOVE";
+            removeButtonElement.classList.add("remove");
+            itemElement.appendChild(removeButtonElement);
+
+            removeButtonElement.addEventListener('click', function() {
+                listElement.removeChild(itemElement);
+            });
+
+        }
+
+        let newItemInputElement = document.querySelector("#item-name");
+        function getNewItem() {
+            let item = newItemInputElement.value;
+            if (item.trim() != "") {
+                addItemToList(item);
+            }
+            newItemInputElement.value = "";
+        }
+
+        let buttonElement = document.querySelector("#add-button");
+        buttonElement.addEventListener("click", getNewItem);
+
+        newItemInputElement.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                getNewItem(); 
+            } else if (event.key === "Escape"){
+                newItemInputElement.value = ""; 
+            }
+        });
+
+        newItemInputElement.focus();
+
+
+        let resetAllElement = document.querySelector(".reset-all");
+        resetAllElement.onclick = function(){
+            let itemContentList = document.querySelectorAll(".item-content");
+            for(let i = 0; i < itemContentList.length; i++){
+                let itemContent = itemContentList[i];
+                itemContent.classList.remove("finished"); 
+            }
+        }
+
+        let removeAllElement = document.querySelector(".remove-all");
+        removeAllElement.onclick = function(){
+            let itemList = document.querySelectorAll(".item");
+            if (itemList.length > 0 && confirm("Are you SURE you want to remove all items?\nThis can't be undone.")) {
+                itemList.forEach(function(item){
+                    item.remove();
+                });
+            }
+        }
+
+        // Now, the "JSON Area" will just be two buttons for saving and loading from localStorage
+
+        // let jsonTextArea = document.querySelector("#json");
+
+        //The old export button is now a "save" button
+        document.querySelector("#export-json").onclick = function(){
+            //The process of creating an array of custom objects to represent
+            //the state of our list is the same as before 
+            console.log("saving");
+            let listItems = []; 
+            listElement.querySelectorAll(".item-content").forEach(function(itemContentElement){
+                let obj = {
+                    content: itemContentElement.textContent,
+                    finished: itemContentElement.classList.contains("finished")
+                }
+                listItems.push(obj);
+            });
+            //Again, we convert the object to JSON string form, though we don't put it on the page.
+            let jsonString = JSON.stringify(listItems, null, 2);
+
+            //Use the browser's LocalStorage object to save our JSON object
+            //Associate with a "key" string, called 'saved-list'
+            window.localStorage.setItem('saved-list', jsonString); 
+            //This stays stored across sessions, even if the tab is closed.
+
+        }
+
+        //The old import button is now a "load" button
+        document.querySelector("#import-json").onclick = function(){
+            console.log("loading");
+            //Access our saved JSON object in LocalStorage,
+            // via the associated "key", 'saved-list'
+            let jsonString = window.localStorage.getItem('saved-list');
+            //If there wasn't anything saved in the first place, stop here
+            if (jsonString === null)
+                return;
+
+            //Again, the process of reconstituting the list from the JSON string is the same.
+            let listItems = JSON.parse(jsonString); 
+            listElement.replaceChildren(inputsElement); 
+
+            listItems.forEach(function(listItem){ 
+                addItemToList(listItem.content, listItem.finished);
+            })
+        }
+    </script>
+</body>
+</html>

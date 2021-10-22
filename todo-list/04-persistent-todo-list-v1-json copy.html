@@ -1,0 +1,177 @@
+<!-- 
+    An interactive webpage where the user can enter items on a list via an input.
+    Then, they can mark them complete or remove them from the list.
+
+    This version demonstrates how JavaScript objects and arrays can be serialized 
+    to and from JSON strings. This can be used to send or save the data...
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles/00-style.css">
+    <link rel="stylesheet" href="styles/03-inputs-style.css">
+    <link rel="stylesheet" href="styles/03-finished-style.css">
+    <link rel="stylesheet" href="styles/03-removable-list-elements.css">
+    <link rel="stylesheet" href="styles/03-page-header-elements.css">
+    <!-- New stylesheet just for json areas -->
+    <link rel="stylesheet" href="styles/04-json-area.css">
+    
+</head>
+<body>
+    
+    <h1>Whatcha gotta do today?</h1>
+    
+    <div class="notepad">
+        <div class="page-header">
+            <h2>To Do:</h2>
+            <p class="reset-all">Reset all</p>
+            <button class="remove-all">REMOVE ALL</button>
+        </div>
+        <ul class="list">
+            <!-- To be given contents by JS -->
+            <li class="inputs">
+                <input type="text" name="item-name" id="item-name">
+                <button id="add-button">Add</button>
+            </li>
+        </ul>
+    </div>
+
+    <hr>
+    <div class="json-area">
+        <h3>JSON Area</h3>
+        <textarea id="json"></textarea>
+        <div class="json-buttons">
+            <button id="export-json">Export JSON</button>
+            <button id="import-json">Import JSON</button>        
+        </div>
+    </div>
+
+    <script>
+        
+        let listElement = document.querySelector(".list");
+        let inputsElement = document.querySelector(".inputs")
+
+        //Updated with a second, OPTIONAL parameter. Default value is false.
+        function addItemToList(item, finished=false){
+            
+            let itemElement = document.createElement("li");
+            
+            itemElement.classList.add("item");
+
+            listElement.insertBefore(itemElement, inputsElement);
+
+            let itemContentElement = document.createElement("p");
+            itemContentElement.classList.add("item-content");
+            itemContentElement.textContent = item;
+            //Updated: Set the finished state (optional parameter)
+            if (finished)
+                itemContentElement.classList.add("finished");
+            
+            itemElement.appendChild(itemContentElement);
+
+            itemContentElement.onclick = function(){
+                itemContentElement.classList.toggle("finished");
+            }
+
+            let removeButtonElement = document.createElement("button");
+            removeButtonElement.textContent = "REMOVE";
+            removeButtonElement.classList.add("remove");
+            itemElement.appendChild(removeButtonElement);
+
+            removeButtonElement.addEventListener('click', function() {
+                listElement.removeChild(itemElement);
+            });
+
+        }
+
+        let newItemInputElement = document.querySelector("#item-name");
+        function getNewItem() {
+            let item = newItemInputElement.value;
+            if (item.trim() != "") {
+                addItemToList(item);
+            }
+            newItemInputElement.value = "";
+        }
+
+        let buttonElement = document.querySelector("#add-button");
+        buttonElement.addEventListener("click", getNewItem);
+
+        newItemInputElement.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                getNewItem(); 
+            } else if (event.key === "Escape"){
+                newItemInputElement.value = ""; 
+            }
+        });
+
+        newItemInputElement.focus();
+
+
+        let resetAllElement = document.querySelector(".reset-all");
+        resetAllElement.onclick = function(){
+            let itemContentList = document.querySelectorAll(".item-content");
+            for(let i = 0; i < itemContentList.length; i++){
+                let itemContent = itemContentList[i];
+                itemContent.classList.remove("finished"); 
+            }
+        }
+
+        let removeAllElement = document.querySelector(".remove-all");
+        removeAllElement.onclick = function(){
+            let itemList = document.querySelectorAll(".item");
+            if (itemList.length > 0 && confirm("Are you SURE you want to remove all items?\nThis can't be undone.")) {
+                itemList.forEach(function(item){
+                    item.remove();
+                });
+            }
+        }
+
+        //Set up onclicks for the export JSON functionality
+
+        let jsonTextArea = document.querySelector("#json");
+
+        document.querySelector("#export-json").onclick = function(){
+            console.log("export");
+            let listItems = []; //Create an empty list 
+            //For every item content HTML element
+            listElement.querySelectorAll(".item-content").forEach(function(itemContentElement){
+                //Create an object representing the content and its finished state 
+                //The new object has two properties: content and finished
+                let obj = {
+                    content: itemContentElement.textContent,
+                    finished: itemContentElement.classList.contains("finished")
+                }
+                //Add the object to the list
+                listItems.push(obj);
+            });
+            //Take the list of objects and use JSON.stringify to convert to a JSON string 
+            // The null and 2 arguments tell it to "pretty" print with an indent of 2  
+            //Place that string in the textarea
+            jsonTextArea.value = JSON.stringify(listItems, null, 2); 
+        }
+
+        //Set up onclicks for the import JSON functionality
+        document.querySelector("#import-json").onclick = function(){
+            console.log("import");
+            //JSON.parse is the reverse of JSON.stringify() - takes a string (contents of the textarea)
+            // and reconstitutes it into what it was. In this case, its an array of objects
+            let listItems = JSON.parse(jsonTextArea.value); 
+            //...It should be an array of objects, but if not, we'll have errors.
+
+            //Clear out all list items, then replace inputsElement
+            listElement.replaceChildren(inputsElement); 
+
+            //For every object in the array, add to the list.
+            listItems.forEach(function(listItem){ 
+                //Each listItem object had two properties, content and finished
+                //Use them to recreate the HTML elements
+                addItemToList(listItem.content, listItem.finished);
+            })
+        }
+    </script>
+</body>
+</html>

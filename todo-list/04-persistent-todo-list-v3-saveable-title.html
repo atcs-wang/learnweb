@@ -1,0 +1,180 @@
+<!-- 
+    An interactive webpage where the user can enter items on a list via an input.
+    Then, they can mark them complete or remove them from the list.
+
+    This version adds the ability to edit the title of the list, 
+    which can also be saved/loaded along with the contents of the list.    
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles/00-style.css">
+    <link rel="stylesheet" href="styles/03-inputs-style.css">
+    <link rel="stylesheet" href="styles/03-finished-style.css">
+    <link rel="stylesheet" href="styles/03-removable-list-elements.css">
+    <link rel="stylesheet" href="styles/03-page-header-elements.css">
+    <link rel="stylesheet" href="styles/04-json-area.css">
+    
+</head>
+<body>
+    
+    <h1>Whatcha gotta do today?</h1>
+    
+    <div class="notepad">
+        <div class="page-header">
+            <!-- We want to make our h2 title changeable, so an id is added -->
+            <h2 id="title">To Do:</h2>
+            <p class="reset-all">Reset all</p>
+            <button class="remove-all">REMOVE ALL</button>
+        </div>
+        <ul class="list">
+            <!-- To be given contents by JS -->
+            <li class="inputs">
+                <input type="text" name="item-name" id="item-name">
+                <button id="add-button">Add</button>
+            </li>
+        </ul>
+    </div>
+
+    <hr>
+    <div class="json-area">
+        <h3>Local Storage Controls</h3>
+        <div class="json-buttons">
+            <button id="export-json">Save</button>
+            <button id="import-json">Load</button>        
+        </div>
+    </div>
+
+    <script>
+        
+        let listElement = document.querySelector(".list");
+        let inputsElement = document.querySelector(".inputs")
+
+        function addItemToList(item, finished=false){
+            
+            let itemElement = document.createElement("li");
+            
+            itemElement.classList.add("item");
+
+            listElement.insertBefore(itemElement, inputsElement);
+
+            let itemContentElement = document.createElement("p");
+            itemContentElement.classList.add("item-content");
+            itemContentElement.textContent = item;
+            
+            if (finished)
+                itemContentElement.classList.add("finished");
+            
+            itemElement.appendChild(itemContentElement);
+
+            itemContentElement.onclick = function(){
+                itemContentElement.classList.toggle("finished");
+            }
+
+            let removeButtonElement = document.createElement("button");
+            removeButtonElement.textContent = "REMOVE";
+            removeButtonElement.classList.add("remove");
+            itemElement.appendChild(removeButtonElement);
+
+            removeButtonElement.addEventListener('click', function() {
+                listElement.removeChild(itemElement);
+            });
+
+        }
+
+        let newItemInputElement = document.querySelector("#item-name");
+        function getNewItem() {
+            let item = newItemInputElement.value;
+            if (item.trim() != "") {
+                addItemToList(item);
+            }
+            newItemInputElement.value = "";
+        }
+
+        let buttonElement = document.querySelector("#add-button");
+        buttonElement.addEventListener("click", getNewItem);
+
+        newItemInputElement.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                getNewItem(); 
+            } else if (event.key === "Escape"){
+                newItemInputElement.value = ""; 
+            }
+        });
+
+        newItemInputElement.focus();
+
+
+        let resetAllElement = document.querySelector(".reset-all");
+        resetAllElement.onclick = function(){
+            let itemContentList = document.querySelectorAll(".item-content");
+            for(let i = 0; i < itemContentList.length; i++){
+                let itemContent = itemContentList[i];
+                itemContent.classList.remove("finished"); 
+            }
+        }
+
+        let removeAllElement = document.querySelector(".remove-all");
+        removeAllElement.onclick = function(){
+            let itemList = document.querySelectorAll(".item");
+            if (itemList.length > 0 && confirm("Are you SURE you want to remove all items?\nThis can't be undone.")) {
+                itemList.forEach(function(item){
+                    item.remove();
+                });
+            }
+        }
+        
+        //Make the title changeable:
+        document.querySelector("#title").onclick = function(){
+            //Prompt could return null or an empty string if the user 
+            let newTitle = prompt("Change the title name", 
+                                   document.querySelector("#title").textContent); // use old title as default
+            
+            //Only update if not Cancel and non-empty
+            if (newTitle !== null && newTitle.trim() !== "") {
+                document.querySelector("#title").textContent = newTitle;
+            }
+        }
+
+        document.querySelector("#export-json").onclick = function(){
+            console.log("saving");
+            let listItems = []; 
+            listElement.querySelectorAll(".item-content").forEach(function(itemContentElement){
+                let obj = {
+                    content: itemContentElement.textContent,
+                    finished: itemContentElement.classList.contains("finished")
+                }
+                listItems.push(obj);
+            });
+            let jsonString = JSON.stringify(listItems, null, 2);
+
+            window.localStorage.setItem('saved-list', jsonString); 
+            
+            //UPDATED: Save the title as well.
+            window.localStorage.setItem('saved-title', document.querySelector('#title').textContent);
+        }
+
+        document.querySelector("#import-json").onclick = function(){
+            console.log("loading");
+            let jsonString = window.localStorage.getItem('saved-list');
+            if (jsonString === null)
+                return;
+
+            let listItems = JSON.parse(jsonString); 
+            listElement.replaceChildren(inputsElement); 
+
+            listItems.forEach(function(listItem){ 
+                addItemToList(listItem.content, listItem.finished);
+            })
+
+            //Updated: load the title as well
+            document.querySelector('#title').textContent = window.localStorage.getItem('saved-title');
+        }
+
+    </script>
+</body>
+</html>

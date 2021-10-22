@@ -2,8 +2,8 @@
     An interactive webpage where the user can enter items on a list via an input.
     Then, they can mark them complete or remove them from the list.
 
-    This version demonstrates how JavaScript objects and arrays can be serialized 
-    to and from JSON strings.
+    This version removes the save/load buttons, and instead loads when the page is loaded,
+    and saves whenever a change is made to the list or title.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="styles/03-inputs-style.css">
     <link rel="stylesheet" href="styles/03-finished-style.css">
     <link rel="stylesheet" href="styles/03-removable-list-elements.css">
-    <link rel="stylesheet" href="styles/04-json-area.css">
+    <link rel="stylesheet" href="styles/03-page-header-elements.css">
+    <!-- Can remove the 04-json-area stylesheet -->
     
 </head>
 <body>
@@ -24,7 +25,11 @@
     <h1>Whatcha gotta do today?</h1>
     
     <div class="notepad">
-        <h2 class="page-header">To Do:</h2>
+        <div class="page-header">
+            <h2>To Do:</h2>
+            <p class="reset-all">Reset all</p>
+            <button class="remove-all">REMOVE ALL</button>
+        </div>
         <ul class="list">
             <!-- To be given contents by JS -->
             <li class="inputs">
@@ -34,51 +39,47 @@
         </ul>
     </div>
 
-    <hr>
+
+    <!-- The whole "JSON area" can be removed  -->
 
     <script>
         
         let listElement = document.querySelector(".list");
-        // The inputs element - last li on the list
         let inputsElement = document.querySelector(".inputs")
 
         function addItemToList(item, finished=false){
+            
             let itemElement = document.createElement("li");
             
-            //Before the only content was text, but now we need two children elements instead.
-            // itemElement.textContent = item;
+            itemElement.classList.add("item");
 
             listElement.insertBefore(itemElement, inputsElement);
 
-            //First, add a paragraph tag inside the list item element, with the item content.
             let itemContentElement = document.createElement("p");
-            itemContentElement.textContent = item;
             itemContentElement.classList.add("item-content");
+            itemContentElement.textContent = item;
+
             if (finished)
                 itemContentElement.classList.add("finished");
+            
             itemElement.appendChild(itemContentElement);
 
-            //Register the onclick with the **paragraph element** only, not the whole list item.
             itemContentElement.onclick = function(){
                 itemContentElement.classList.toggle("finished");
+                //Save when user finishes/unfinishes an item
                 saveListToLocalStorage();
             }
-            //Alternatively, could be done with itemContentElement.addEventListener('click', function(){...}); 
 
-            //Second, add a "remove" button to the itemElement
             let removeButtonElement = document.createElement("button");
             removeButtonElement.textContent = "REMOVE";
             removeButtonElement.classList.add("remove");
             itemElement.appendChild(removeButtonElement);
 
-            //Register an anonymous handler for clicking the remove button
-            //Note that the anonymous handler refers to the particular  
-            //itemElement that was just generated in this function.
             removeButtonElement.addEventListener('click', function() {
                 listElement.removeChild(itemElement);
+                //Save when user removes an item
                 saveListToLocalStorage();
             });
-            //Alternatively, could be done with removeButtonElement.onclick = function(){...}; 
 
         }
 
@@ -87,6 +88,7 @@
             let item = newItemInputElement.value;
             if (item.trim() != "") {
                 addItemToList(item);
+                //Save when user adds a new item
                 saveListToLocalStorage();
             }
             newItemInputElement.value = "";
@@ -105,34 +107,77 @@
 
         newItemInputElement.focus();
 
+
+        let resetAllElement = document.querySelector(".reset-all");
+        resetAllElement.onclick = function(){
+            let itemContentList = document.querySelectorAll(".item-content");
+            for(let i = 0; i < itemContentList.length; i++){
+                let itemContent = itemContentList[i];
+                itemContent.classList.remove("finished"); 
+            }
+            //Save when user resets all items
+            saveListToLocalStorage();
+
+        }
+
+        let removeAllElement = document.querySelector(".remove-all");
+        removeAllElement.onclick = function(){
+            let itemList = document.querySelectorAll(".item");
+            if (itemList.length > 0 && confirm("Are you SURE you want to remove all items?\nThis can't be undone.")) {
+                itemList.forEach(function(item){
+                    item.remove();
+                });
+            }
+            //Save when user removes all items
+            saveListToLocalStorage();
+        }
+
+    
+        document.querySelector("#title").onclick = function(){
+            let newTitle = prompt("Change the title name", 
+                                   document.querySelector("#title").textContent); // use old title as default
+            
+            if (newTitle !== null && newTitle.trim() !== "") {
+                document.querySelector("#title").textContent = newTitle;
+            }
+        }
+
+        //Rather than attaching the save/load functions to button events,
+        //Let's actually name the functions for reuse.
+        // Notice that saveListToLocalStorage is already referenced above several times!
+
         function saveListToLocalStorage(){
-            let listItems = [];
+            console.log("saving");
+            let listItems = []; 
             listElement.querySelectorAll(".item-content").forEach(function(itemContentElement){
-                listItems.push(
-                    {
-                        content: itemContentElement.textContent,
-                        finished: itemContentElement.classList.contains("finished")
-                    }
-                );
+                let obj = {
+                    content: itemContentElement.textContent,
+                    finished: itemContentElement.classList.contains("finished")
+                }
+                listItems.push(obj);
             });
-            localStorage.setItem("saved-list", JSON.stringify(listItems)); 
+            let jsonString = JSON.stringify(listItems, null, 2);
+            window.localStorage.setItem('saved-list', jsonString); 
+            window.localStorage.setItem('saved-title', document.querySelector('#title').textContent);
         }
 
         function loadListFromLocalStorage(){
-            console.log("import");
-            let listItems = JSON.parse(localStorage.getItem("saved-list")); 
-            if (listItems === null)
+            console.log("loading");
+            let jsonString = window.localStorage.getItem('saved-list');
+            if (jsonString === null)
                 return;
-            listElement.replaceChildren(inputsElement); //clear out all list items, replace inputsElement
+
+                let listItems = JSON.parse(jsonString); 
+            listElement.replaceChildren(inputsElement); 
 
             listItems.forEach(function(listItem){ 
-                //every item in the array, add to the list.
                 addItemToList(listItem.content, listItem.finished);
             })
+            document.querySelector('#title').textContent = window.localStorage.getItem('saved-title');
         }
-
-        //Load at start.
-        loadListFromLocalStorage();
+        
+        //Load when the page starts!
+        loadListFromLocalStorage();         
     </script>
 </body>
 </html>
