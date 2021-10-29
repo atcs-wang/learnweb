@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ex4 - Number List</title>
+
+    <style>
+        #countbox {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        p {
+            border-radius: 5px;
+            border: 2px solid blue;
+            padding: 20px;
+            margin: 0;
+            font-size: 24px;
+        }
+        .finished {
+            border-style: dashed;  /* easy to change CSS */
+            border-color: red;
+            text-decoration: line-through solid red;
+        }
+    </style>
+</head>
+<body>
+    <label>From:</label>
+    <input type="number" id="from" min=0 value=1>
+    <label>To:</label>
+    <input type="number" id="to" max=10000 value=100>
+    <label>Count By:</label>
+    <input type="number" id="by" min=1 value=1>
+    <button>CREATE</button>
+    <hr>
+    <div id="countbox">
+    </div>
+    <script>
+        function createNumbers(){
+            let countbox = document.querySelector("div");
+            countbox.replaceChildren(); //removes all existing children
+            //querySelect by id with the # sign (selectElementById does the same thing)
+            let fromInput = document.querySelector("#from");
+            let from = Number(fromInput.value) //value is actually a string, convert
+            let toInput = document.querySelector("#to");
+            let to = Number(toInput.value);
+            let byInput = document.querySelector("#by");
+            let by = Number(byInput.value);
+
+            for (let i = from; i <= to; i += by) {
+                let numElm = document.createElement("p");
+                countbox.appendChild(numElm);
+                numElm.textContent = i;
+                numElm.addEventListener("click", crossOut);
+            }
+        }
+
+        let button = document.querySelector("button");
+        button.addEventListener("click", createNumbers);
+
+        function crossOut(event) {
+            let numElm = event.currentTarget; //event.currentTarget refers to what was clicked
+            //Changing the style directly is not ideal
+            // numElm.style.textDecoration = "line-through";
+            //Better to change classes to affect styles
+            numElm.classList.add("finished");
+            //Can also remove with .remove()
+            //check if contains with .contains()
+            //toggle() goes back and forth 
+        }
+
+    </script>
+</body>
+</html>

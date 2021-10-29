@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ex4: Img Gallery</title>
+    <style>
+        h1 {
+            font-family: helvetica, arial, sans-serif;
+            text-align: center;
+        }
+
+        body {
+            width: 640px;
+            margin: 0 auto;
+        }
+
+        .full-img {
+            display: block;
+            width: 640px;
+            height: 480px;
+        }
+        .thumb-bar {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        .thumb-bar img {
+            width: 20%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image gallery example</h1>
+
+    <div class="full-img">
+      <img class="displayed-img" src="images/eye.jpg">
+    </div>
+
+    <div class="thumb-bar">
+
+    </div>
+    <script>
+        
+    </script>
+</body>
+</html>

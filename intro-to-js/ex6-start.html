@@ -1,0 +1,65 @@
+<!-- Adding an "else" statement to the if. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html {
+            background-color: rgb(255,255,255);
+        }
+        body {
+            min-width: 50%;
+            max-width: 500px;
+            min-height: 300px;
+            margin: 0 auto; /* centering trick */
+            padding: 20px;
+            background-color: rgb(100,100,100);
+        }
+        .finished {
+            text-decoration: line-through solid red;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>My To Do List</h1>
+    <input type="text">
+    <button id="add">Add</button>
+    <button id="remove-finished">Remove Finished</button>
+    <button id="remove-all">Remove ALL</button>
+    <ul>
+    </ul>
+    <script>
+
+        function addToList(content){
+            let itemElm = document.createElement("li");
+            itemElm.textContent = content;
+            let listElm = document.querySelector("ul");
+            listElm.appendChild(itemElm);
+        }
+
+        function getUserItem(){
+            let inputElm = document.querySelector("input");
+            //Only add to the list if not empty
+            if (inputElm.value !== "") {
+                addToList(inputElm.value); 
+            }
+            else {
+                alert("You can’t add a blank item to the list");
+            }
+            inputElm.value = ""; //clear the input box
+        }
+
+        let buttonElm = document.querySelector("button");
+        buttonElm.addEventListener("click", getUserItem);
+        
+        //This is another way to register a click event handler:
+        // buttonElm.onclick = getUserItem;
+        
+    </script>
+
+</body>
+</html>
